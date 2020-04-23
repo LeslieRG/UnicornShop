@@ -1,0 +1,56 @@
+﻿@page
+@model UnicornShop.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    const int maxperRow = 3;
+    int counter=0;
+}
+
+<h1>Nuestros Productos</h1>
+<link href="~/css/site.css" rel="stylesheet" />
+<p>
+    <a asp-page="Create">Crea Uno Nuevo</a>
+</p>
+
+  
+<body>
+    <div class="row" align="center">
+        @foreach (var item in Model.Producto)
+        {
+            counter++;
+            if (counter > maxperRow)
+            {
+                counter = 0;
+
+                @Html.Raw("</div>")
+                @Html.Raw("<div class=\"row\">")
+            }
+            <div class="card" align="center">
+                <div class="col-md-4">
+                    <a href="@Url.Action("Details", "Home", new { item.Id})" class="img-thumbnail">
+                        <img src="@item.UrlImagen" alt="@item.Nombre" title="@item.Nombre" style="width:100%" />
+                        <span class="col-form-label label-success"> </span>
+                    </a>
+                    <div class="container">
+                        <h5>Descripción General del Producto:</h5>
+                        <a href="@Url.Action("Details", "Home", new { item.Id})"></a>
+                        <h5>@item.Nombre</h5>
+                        <p>@item.Descripción</p>
+                        <p>Precio de Lista @item.Precio</p>
+                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <br />
+
+
+</body>
+
+       
